@@ -1,5 +1,11 @@
 """Const for forked-daapd."""
 from homeassistant.components.media_player.const import (
+    MEDIA_TYPE_ALBUM,
+    MEDIA_TYPE_ARTIST,
+    MEDIA_TYPE_MUSIC,
+    MEDIA_TYPE_PLAYLIST,
+    MEDIA_TYPE_TRACK,
+    SUPPORT_BROWSE_MEDIA,
     SUPPORT_CLEAR_PLAYLIST,
     SUPPORT_NEXT_TRACK,
     SUPPORT_PAUSE,
@@ -15,6 +21,14 @@ from homeassistant.components.media_player.const import (
     SUPPORT_VOLUME_MUTE,
     SUPPORT_VOLUME_SET,
 )
+
+CAN_PLAY_TYPE = {
+    MEDIA_TYPE_ALBUM,
+    MEDIA_TYPE_ARTIST,
+    MEDIA_TYPE_PLAYLIST,
+    MEDIA_TYPE_TRACK,
+    MEDIA_TYPE_MUSIC,
+}
 
 CALLBACK_TIMEOUT = 8  # max time between command and callback from forked-daapd server
 CONF_LIBRESPOT_JAVA_PORT = "librespot_java_port"
@@ -64,7 +78,8 @@ STARTUP_DATA = {
     "outputs": [],
 }
 SUPPORTED_FEATURES = (
-    SUPPORT_PLAY
+    SUPPORT_BROWSE_MEDIA
+    | SUPPORT_PLAY
     | SUPPORT_PAUSE
     | SUPPORT_STOP
     | SUPPORT_SEEK

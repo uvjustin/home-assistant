@@ -558,7 +558,7 @@ async def test_async_play_media_from_paused(hass, mock_api_object):
         SERVICE_PLAY_MEDIA,
         {
             ATTR_MEDIA_CONTENT_TYPE: MEDIA_TYPE_MUSIC,
-            ATTR_MEDIA_CONTENT_ID: "somefile.mp3",
+            ATTR_MEDIA_CONTENT_ID: "&somefile.mp3",
         },
     )
     state = hass.states.get(TEST_MASTER_ENTITY_NAME)
@@ -582,7 +582,7 @@ async def test_async_play_media_from_stopped(
         SERVICE_PLAY_MEDIA,
         {
             ATTR_MEDIA_CONTENT_TYPE: MEDIA_TYPE_MUSIC,
-            ATTR_MEDIA_CONTENT_ID: "somefile.mp3",
+            ATTR_MEDIA_CONTENT_ID: "&somefile.mp3",
         },
     )
     state = hass.states.get(TEST_MASTER_ENTITY_NAME)
@@ -617,7 +617,7 @@ async def test_async_play_media_tts_timeout(hass, mock_api_object):
             SERVICE_PLAY_MEDIA,
             {
                 ATTR_MEDIA_CONTENT_TYPE: MEDIA_TYPE_MUSIC,
-                ATTR_MEDIA_CONTENT_ID: "somefile.mp3",
+                ATTR_MEDIA_CONTENT_ID: "/api/tts_proxy/somefile.mp3",
             },
         )
         state = hass.states.get(TEST_MASTER_ENTITY_NAME)
@@ -726,7 +726,7 @@ async def test_librespot_java_play_media(hass, pipe_control_api_object):
         SERVICE_PLAY_MEDIA,
         {
             ATTR_MEDIA_CONTENT_TYPE: MEDIA_TYPE_MUSIC,
-            ATTR_MEDIA_CONTENT_ID: "somefile.mp3",
+            ATTR_MEDIA_CONTENT_ID: "&somefile.mp3",
         },
     )
     state = hass.states.get(TEST_MASTER_ENTITY_NAME)
@@ -748,7 +748,7 @@ async def test_librespot_java_play_media_pause_timeout(hass, pipe_control_api_ob
             SERVICE_PLAY_MEDIA,
             {
                 ATTR_MEDIA_CONTENT_TYPE: MEDIA_TYPE_MUSIC,
-                ATTR_MEDIA_CONTENT_ID: "somefile.mp3",
+                ATTR_MEDIA_CONTENT_ID: "&somefile.mp3",
             },
         )
         state = hass.states.get(TEST_MASTER_ENTITY_NAME)
