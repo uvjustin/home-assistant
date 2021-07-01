@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import Final
 
-from aiohttp.hdrs import ACCEPT, AUTHORIZATION, CONTENT_TYPE, ORIGIN
+from aiohttp.hdrs import ACCEPT, AUTHORIZATION, CONTENT_RANGE, CONTENT_TYPE, ORIGIN
 from aiohttp.web import Application
 from aiohttp.web_urldispatcher import (
     AbstractResource,
@@ -22,6 +22,7 @@ ALLOWED_CORS_HEADERS: Final[list[str]] = [
     HTTP_HEADER_X_REQUESTED_WITH,
     CONTENT_TYPE,
     AUTHORIZATION,
+    CONTENT_RANGE,
 ]
 VALID_CORS_TYPES: Final = (Resource, ResourceRoute, StaticResource)
 

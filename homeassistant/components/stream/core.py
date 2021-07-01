@@ -57,6 +57,7 @@ class Part:
 class Segment:
     """Represent a segment."""
 
+    start_time: datetime.datetime = attr.ib()
     sequence: int = attr.ib(default=0)
     # the init of the mp4 the segment is based on
     init: bytes = attr.ib(default=None)
@@ -67,7 +68,6 @@ class Segment:
     # As of Python 3.7, insertion order is preserved, and we insert
     # in sequential order, so the Parts are ordered
     parts_by_byterange: dict[int, Part] = attr.ib(factory=dict)
-    start_time: datetime.datetime = attr.ib(factory=datetime.datetime.utcnow)
     _stream_outputs: Iterable[StreamOutput] = attr.ib(factory=list)
     # Store text of this segment's hls playlist for reuse
     hls_playlist_template: str = attr.ib(default=None)
@@ -160,12 +160,7 @@ class Segment:
         playlist_parts = [self.hls_playlist_parts] if self.hls_playlist_parts else []
         if not playlist_template:
             if last_stream_id != self.stream_id:
-                playlist_template = [
-                    "#EXT-X-DISCONTINUITY",
-                    "#EXT-X-PROGRAM-DATE-TIME:"
-                    + self.start_time.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3]
-                    + "Z",
-                ]
+                playlist_template.append("#EXT-X-DISCONTINUITY")
             playlist_template.append("{}")
         if render_parts:
             for http_range_start, part in itertools.islice(
@@ -182,9 +177,13 @@ class Segment:
             playlist_template.pop()
             playlist_template.extend(
                 [
-                    # Squeeze the placeholder on the same line as #EXTINF
+                    # Squeeze the placeholder on the same line as #EXT-X-PROGRAM-DATE-TIME
                     # just to keep tidy when there are no parts
-                    "{}" + f"#EXTINF:{self.duration:.3f},",
+                    "{}"
+                    + "#EXT-X-PROGRAM-DATE-TIME:"
+                    + self.start_time.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3]
+                    + "Z",
+                    f"#EXTINF:{self.duration:.3f},",
                     f"./segment/{self.sequence}.m4s",
                 ]
             )
